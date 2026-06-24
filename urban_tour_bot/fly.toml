@@ -1,0 +1,11 @@
+# Fly.io configuration for Urban Tour bot
+# App name must match the existing Fly app.
+app = "urban-bot"
+primary_region = "ams"
+
+[build]
+  dockerfile = "Dockerfile"
+
+# This application is intended to run as a background worker (Telegram bot).
+# Secrets (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, etc.) should be set via
+# Fly secrets or via the GitHub Actions workflow.
