@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  urban_tour_bot:
+    build: .
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    command: ["python", "bot.py"]
