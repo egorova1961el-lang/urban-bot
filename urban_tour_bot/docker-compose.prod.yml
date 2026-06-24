@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  urban_tour_bot:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      restart_policy:
+        condition: any
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=3600
+
+  hc-pinger:
+    image: byrnedo/alpine-curl:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    command: sh -c "while true; do if [ -n \"$HEALTHCHECKS_PING_URL\" ]; then curl -fsS --max-time 10 $HEALTHCHECKS_PING_URL || true; fi; sleep 300; done"
