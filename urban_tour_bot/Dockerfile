@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY . /app
 
 # Do not copy local .env into the image in production. Set env vars in the host/orchestrator.
-CMD ["python", "bot.py"]
+CMD ["python", "urban_tour_bot/bot.py"]
